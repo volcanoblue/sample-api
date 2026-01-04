@@ -276,7 +276,7 @@ Centralized exception handling at application level.
 
 ---
 
-## Sanmple Use Cases
+## Sample Use Cases
 
 ### Create User
 
