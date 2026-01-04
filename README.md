@@ -1,4 +1,4 @@
-﻿# VolcanoBlue Sample API - Solution Documentation
+﻿# VolcanoBlue Sample API
 
 ## Project Overview
 
