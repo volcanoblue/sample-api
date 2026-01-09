@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "VolcanoBlue",
+  "classifications": [
+    "Web",
+    "WebAPI",
+    "Hexagonal Architecture",
+    "Vertical Slices",
+    "Minimal API"
+  ],
+  "identity": "VolcanoBlue.SampleApi.Template",
+  "name": "VolcanoBlue Sample API",
+  "shortName": "volcanoblue",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "VolcanoBlue.SampleApi",
+  "preferNameDirectory": true,
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net9.0",
+          "description": "Target .NET 9.0"
+        },
+        {
+          "choice": "net8.0",
+          "description": "Target .NET 8.0"
+        }
+      ],
+      "replaces": "net9.0",
+      "defaultValue": "net9.0"
+    },
+    "IncludeTests": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Include test project",
+      "defaultValue": "true"
+    },
+    "EnableDocker": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Enable Docker support",
+      "defaultValue": "true"
+    },
+    "UserSecretsId": {
+      "type": "generated",
+      "generator": "guid",
+      "replaces": "d0f1db52-8634-4028-9b38-ca7e1a42ae4a",
+      "parameters": {
+        "format": "D"
+      }
+    },
+    "ApiName": {
+      "type": "parameter",
+      "datatype": "string",
+      "description": "The name of the API (used in Swagger)",
+      "defaultValue": "Sample API",
+      "replaces": "Sample API"
+    },
+    "RootNamespace": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "RootNamespaceTransform",
+      "replaces": "VolcanoBlue.SampleApi"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!IncludeTests)",
+          "exclude": [
+            "SampleApi.Tests/**/*"
+          ]
+        },
+        {
+          "condition": "(!EnableDocker)",
+          "exclude": [
+            "**/Dockerfile",
+            "**/.dockerignore"
+          ]
+        },
+        {
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**",
+            "**/.vs/**",
+            "**/.vscode/**",
+            "**/*.user",
+            "**/*.suo",
+            ".template.config/**/*"
+          ]
+        }
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "SampleApi/VolcanoBlue.SampleApi.csproj"
+    },
+    {
+      "condition": "(IncludeTests)",
+      "path": "SampleApi.Tests/VolcanoBlue.SampleApi.Tests.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Opens the solution in the editor",
+      "manualInstructions": [],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "continueOnError": true
+    }
+  ]
+}

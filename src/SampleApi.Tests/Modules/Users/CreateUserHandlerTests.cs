@@ -41,23 +41,5 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             Assert.False(result);
             Assert.IsType<EmptyEmailError>(result.ErrorValue);
         }
-
-        [Fact]
-        public async Task Should_fail_when_cancellation_is_requested() 
-        {
-            //Arrange
-            var handler = new CreateUserHandler(new FakeUserRepository(), new FakeUserViewStore());
-            var command = new CreateUserCommand("John", "john@email.com");
-            var cts = new CancellationTokenSource();
-            cts.Cancel();
-            var ct = cts.Token;
-
-            //Act
-            var result = await handler.HandleAsync(command, ct);
-
-            //Assert
-            Assert.False(result);
-            Assert.IsType<OperationCancelledError>(result.ErrorValue);
-        }
     }
 }

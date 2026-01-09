@@ -23,9 +23,6 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 
         public async Task<Result<Unit, IError>> SaveAsync(User user, CancellationToken ct)
         {
-            if (ct.IsCancellationRequested)
-                return await Task.FromResult(CancellationTokenErrors.OperationCancelled);
-
             _users.AddOrUpdate(user.Id, user, (key, oldValue) => user);
 
             return await Task.FromResult(Unit.Value);

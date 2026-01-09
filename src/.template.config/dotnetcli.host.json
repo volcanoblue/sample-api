@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "Framework": {
+      "longName": "framework",
+      "shortName": "F"
+    },
+    "IncludeTests": {
+      "longName": "include-tests",
+      "shortName": ""
+    },
+    "EnableDocker": {
+      "longName": "enable-docker",
+      "shortName": ""
+    },
+    "ApiName": {
+      "longName": "api-name",
+      "shortName": ""
+    }
+  }
+}

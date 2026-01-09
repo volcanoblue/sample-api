@@ -27,7 +27,6 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 
                 (int StatusCode, string Message) = emailChanged.ErrorValue switch
                 {
-                    OperationCancelledError => (StatusCodes.Status422UnprocessableEntity, "Operation cancelled"),
                     UserNotFoundError => (StatusCodes.Status404NotFound, "User not found"),
                     EmptyEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error")
