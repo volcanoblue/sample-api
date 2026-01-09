@@ -4,7 +4,7 @@ using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 {
-    public class GetByIdHandlerTests
+    public class GetUserByIdHandlerTests
     {
         [Fact]
         public async Task Shound_return_an_user_view_when_user_exists()
