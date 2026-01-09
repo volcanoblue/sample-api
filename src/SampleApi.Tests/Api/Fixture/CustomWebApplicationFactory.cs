@@ -18,6 +18,7 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
         private MeterProvider? _meterProvider;
 
         public FakeUserRepository UserRepository { get; } = new();
+        public FakeUserViewStore UserViewStore { get; } = new();
         public InMemoryTelemetry Telemetry { get; } = new();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -27,7 +28,9 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
             builder.ConfigureServices(services =>
             {
                 services.RemoveAll<IUserRepository>();
+                services.RemoveAll<IUserViewStore>();
                 services.AddSingleton<IUserRepository>(UserRepository);
+                services.AddSingleton<IUserViewStore>(UserViewStore);
                 services.AddSingleton<ChangeEmailMetrics>();
                 
                 var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IHostedService));

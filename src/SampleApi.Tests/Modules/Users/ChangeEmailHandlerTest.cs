@@ -12,17 +12,19 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         {
             //Arrange
             var repo = new FakeUserRepository();
+            var store = new FakeUserViewStore();
             var userId = Guid.NewGuid();
             await repo.SaveAsync(User.Create(userId, "John", "john@email.com"), CancellationToken.None);
-            var handler = new ChangeEmailHandler(repo);
+            var handler = new ChangeEmailHandler(repo, store);
             var command = new ChangeEmailCommand(userId, "john@email2.com");
+            var ct = CancellationToken.None;
 
             //Act
             var result = await handler.HandleAsync(command, CancellationToken.None);
 
             //Assert
             Assert.True(result);
-            var user = repo.GetById(userId).Get();
+            var user = repo.GetByIdAsync(userId, ct).ResultValue.Get();
             Assert.Equal("john@email2.com", user.Email);
         }
 
@@ -30,7 +32,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         public async Task Should_fail_user_is_not_found()
         {
             //Arrange
-            var handler = new ChangeEmailHandler(new FakeUserRepository());
+            var handler = new ChangeEmailHandler(new FakeUserRepository(), new FakeUserViewStore());
             var command = new ChangeEmailCommand(Guid.NewGuid(), "john@email.com");
 
             //Act
@@ -48,7 +50,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var userId = Guid.NewGuid();
             var repo = new FakeUserRepository();
             await repo.SaveAsync(User.Create(userId, "John", "john@email.com"), CancellationToken.None);
-            var handler = new ChangeEmailHandler(repo);
+            var handler = new ChangeEmailHandler(repo, new FakeUserViewStore());
             var command = new ChangeEmailCommand(userId, string.Empty);
 
             //Act

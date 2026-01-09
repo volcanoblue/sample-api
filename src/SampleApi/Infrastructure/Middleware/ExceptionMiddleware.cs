@@ -1,5 +1,4 @@
 ﻿using Mvc = Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
 {
@@ -36,10 +35,6 @@ namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
                 Detail = detail,
                 Instance = context.Request.Path
             };
-
-            problem.Extensions["traceId"] =
-                Activity.Current?.TraceId.ToString()
-                ?? context.TraceIdentifier;
 
             if (ex is not null)
                 problem.Extensions["exception"] = ex.GetType().Name;

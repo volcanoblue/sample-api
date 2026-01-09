@@ -4,7 +4,7 @@
     /// Represents an error when an operation is cancelled via CancellationToken.
     /// Used as a type-safe alternative to OperationCanceledException in Result types.
     /// </summary>
-    public readonly struct CancellationRequestedError : IError { }
+    public readonly struct OperationCancelledError : IError { }
 
     /// <summary>
     /// Provides static instances of cancellation-related errors.
@@ -15,6 +15,6 @@
         /// Singleton instance representing a cancelled operation.
         /// Return this when CancellationToken.IsCancellationRequested is true.
         /// </summary>
-        public static readonly CancellationRequestedError CancellationRequested;
+        public static readonly OperationCancelledError OperationCancelled;
     }
 }

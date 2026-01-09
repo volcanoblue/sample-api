@@ -2,7 +2,7 @@
 {
     public static class ProblemDetailsExtension
     {
-        public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services)
+        public static IServiceCollection AddProblemDetailsWithTraceId(this IServiceCollection services)
         {
             services.AddProblemDetails(options =>
             {

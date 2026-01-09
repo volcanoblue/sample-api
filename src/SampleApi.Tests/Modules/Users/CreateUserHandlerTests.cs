@@ -9,8 +9,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         [Fact]
         public async Task Should_create_user_when_command_is_valid()
         {
-            var repo = new FakeUserRepository();
-            var handler = new CreateUserHandler(repo);
+            var handler = new CreateUserHandler(new FakeUserRepository(), new FakeUserViewStore());
 
             var command = new CreateUserCommand("John", "john@email.com");
 
@@ -22,7 +21,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         [Fact]
         public async Task Should_fail_when_name_is_missing()
         {
-            var handler = new CreateUserHandler(new FakeUserRepository());
+            var handler = new CreateUserHandler(new FakeUserRepository(), new FakeUserViewStore());
             var command = new CreateUserCommand(string.Empty, "john@email.com");
 
             var result = await handler.HandleAsync(command, CancellationToken.None);
@@ -34,7 +33,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         [Fact]
         public async Task Should_fail_when_email_is_missing()
         {
-            var handler = new CreateUserHandler(new FakeUserRepository());
+            var handler = new CreateUserHandler(new FakeUserRepository(), new FakeUserViewStore());
             var command = new CreateUserCommand("John", string.Empty);
 
             var result = await handler.HandleAsync(command, CancellationToken.None);
@@ -47,7 +46,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         public async Task Should_fail_when_cancellation_is_requested() 
         {
             //Arrange
-            var handler = new CreateUserHandler(new FakeUserRepository());
+            var handler = new CreateUserHandler(new FakeUserRepository(), new FakeUserViewStore());
             var command = new CreateUserCommand("John", "john@email.com");
             var cts = new CancellationTokenSource();
             cts.Cancel();
@@ -58,7 +57,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 
             //Assert
             Assert.False(result);
-            Assert.IsType<CancellationRequestedError>(result.ErrorValue);
+            Assert.IsType<OperationCancelledError>(result.ErrorValue);
         }
     }
 }

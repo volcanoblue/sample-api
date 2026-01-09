@@ -14,7 +14,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             return [.. _users.Values];
         }
 
-        public Option<User> GetById(Guid id)
+        public Result<Option<User>, IError> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return _users.TryGetValue(id, out User? user)
                 ? user.ToOption()
@@ -24,7 +24,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         public async Task<Result<Unit, IError>> SaveAsync(User user, CancellationToken ct)
         {
             if (ct.IsCancellationRequested)
-                return await Task.FromResult(CancellationTokenErrors.CancellationRequested);
+                return await Task.FromResult(CancellationTokenErrors.OperationCancelled);
 
             _users.AddOrUpdate(user.Id, user, (key, oldValue) => user);
 

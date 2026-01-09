@@ -1,4 +1,4 @@
-﻿# VolcanoBlue Sample API
+﻿# VolcanoBlue Sample API - An Web API Template for ASP.NET
 
 ## Project Overview
 

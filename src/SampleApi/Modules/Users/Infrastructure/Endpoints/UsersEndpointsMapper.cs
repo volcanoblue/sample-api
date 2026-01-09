@@ -1,5 +1,6 @@
 ﻿using VolcanoBlue.SampleApi.Modules.Users.ChangeEmail;
 using VolcanoBlue.SampleApi.Modules.Users.CreateUser;
+using VolcanoBlue.SampleApi.Modules.Users.GetUser;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Endpoints
 {
@@ -8,7 +9,8 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Endpoints
         public static WebApplication MapUsers(this WebApplication app)
         {
             return app.MapCreateUser()
-                      .MapUsersChangeEmail();
+                      .MapUsersChangeEmail()
+                      .MapGetUserById();
         }
     }
 }
