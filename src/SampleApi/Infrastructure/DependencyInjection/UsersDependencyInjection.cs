@@ -22,7 +22,7 @@ namespace VolcanoBlue.SampleApi.Infrastructure.DependencyInjection
             {
                 options.UseInMemoryDatabase("EventStoreDb");
             });
-            services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
             services.AddSingleton<IUserViewStore, InMemoryUserViewStorage>();
             
             // Metrics (observability concern)
