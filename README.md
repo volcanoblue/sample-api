@@ -11,7 +11,41 @@ The project showcases modern .NET development practices including:
 - RFC 7807 Problem Details for standardized error responses
 - Integration testing with WebApplicationFactory
 
+### Installation
+
+To install the template you should run the following command: 
+
+`dotnet new install https://github.com/volcanoblue/sample-api`
+
+### Creating a New Project
+
+Run the command below to create a new project based on the template
+
+`dotnet new volcanoblue -n MyCompany.MyApi`
+
+### Template Parameters
+
+dotnet new volcanoapi -n Acme.ProductApi 
+--api-title "Product Management API" 
+--framework net9.0 
+--include-tests true 
+--enable-docker true
+
+| Parameter         | Short | Type   | Default        | Description                           |
+|-------------------|-------|--------|----------------|---------------------------------------|
+| `--name`          | `-n`  | string | Directory name | Project name and root namespace       |
+| `--framework`     | `-f`  | choice | `net9.0`       | Target framework (`net9.0`, `net8.0`) |
+| `--include-tests` |       | bool   | `true`         | Include test project                  |
+| `--enable-docker` |       | bool   | `true`         | Include Docker files                  |
+| `--api-title`     |       | string | "Sample API"   | API title in Swagger                  |
+| `--skip-restore`  |       | bool   | `false`        | Skip automatic restore                |
+
 ---
+
+## Examples
+
+### Swagger
+Access Swagger UI at: `https://localhost:<port>/swagger`
 
 ## Solution Structure
 
@@ -347,96 +381,6 @@ Registers all application services:
 - **Moonad** 5.5.1 - Functional programming utilities for Result types
 - **OpenTelemetry.*** 1.14.0 - Observability stack (tracing, metrics, logging)
 - **Microsoft.VisualStudio.Azure.Containers.Tools.Targets** 1.22.1 - Docker tooling
-
----
-
-## Running the Sample Application
-
-### Prerequisites
-- .NET 9.0 SDK installed
-- Docker (optional, for containerized deployment)
-
-### Local Development
-1. Navigate to SampleApi directory
-2. Run the application
-3. Access Swagger UI at the provided HTTPS endpoint
-
-### Docker
-1. Build the Docker image
-2. Run the container with appropriate port mapping
-
----
-
-## API Endpoints
-
-**Base URL**: HTTPS localhost with dynamic port
-
-### POST /users
-Create a new user
-
-**Request**: Name and Email fields required
-
-**Success Response**: 201 Created with User ID
-
-**Error Responses**: 
-- 400 Bad Request with Problem Details
-- 422 Unprocessable Entity for cancellation
-
----
-
-### POST /users/change-email
-Change user's email address
-
-**Request**: User ID and new email address required
-
-**Success Response**: 200 OK
-
-**Error Responses**:
-- 400 Bad Request for empty email
-- 404 Not Found for non-existent user
-
-### Docker
-- Target OS: Linux
-- Dockerfile Context: Project root
-
----
-
-## Key Design Benefits Summary
-
-### Technology Independence
-- Core business logic has no framework dependencies
-- Easy to migrate or change infrastructure
-- Portable across platforms
-
-### Testability
-- Unit tests run fast without external resources
-- Easy to create test doubles
-- Isolated testing of each layer
-
-### Maintainability
-- Clear boundaries between layers
-- Changes isolated to specific components
-- Easy to locate and modify code
-
-### Extensibility
-- Add new use cases without modifying existing code
-- Multiple adapters can use same business logic
-- Open/Closed Principle adherence
-
-### Performance
-- Result types faster than exceptions
-- Minimal APIs have lower overhead
-- Efficient request processing
-
-### Observability
-- Built-in distributed tracing
-- Comprehensive metrics
-- Structured logging with correlation
-
-### Security
-- Controlled error information exposure
-- Consistent error handling
-- No stack trace leakage
 
 ---
 
