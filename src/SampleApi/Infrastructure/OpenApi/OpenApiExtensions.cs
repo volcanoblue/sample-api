@@ -1,6 +1,6 @@
-﻿namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
+﻿namespace VolcanoBlue.SampleApi.Infrastructure.OpenApi
 {
-    public static class OpenApiMiddlewareExtensions
+    public static class OpenApiExtensions
     {
         public static WebApplication UseOpenApi(this WebApplication app)
         {
