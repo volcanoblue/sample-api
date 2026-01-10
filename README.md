@@ -11,6 +11,7 @@ The project showcases modern .NET development practices including:
 - RFC 7807 Problem Details for standardized error responses
 - Integration testing with WebApplicationFactory
 - Event Sourcing for audit trails and temporal queries
+- CQRS for separating the domain objects from the view models
 
 ### Installation
 

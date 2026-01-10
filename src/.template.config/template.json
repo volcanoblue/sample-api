@@ -6,6 +6,8 @@
     "WebAPI",
     "Hexagonal Architecture",
     "Vertical Slices",
+    "Event Sourcing",
+    "CQRS",
     "Minimal API"
   ],
   "identity": "VolcanoBlue.SampleApi.Template",
