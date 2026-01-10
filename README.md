@@ -44,8 +44,6 @@ dotnet new volcanoapi -n Acme.ProductApi
 
 ---
 
-## Examples
-
 ### Swagger
 Access Swagger UI at: `https://localhost:<port>/swagger`
 
