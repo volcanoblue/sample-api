@@ -21,7 +21,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var ct = CancellationToken.None;
 
             //Act
-            var emailChanged = await fixture.Client.PostAsJsonAsync("/users/change-email", new { id = user!.Id, newemail = newEmail });
+            var emailChanged = await fixture.Client.PutAsJsonAsync("/users", new { id = user!.Id, newemail = newEmail });
             
             //Assert
             Assert.Equal(HttpStatusCode.OK, emailChanged.StatusCode);
@@ -44,7 +44,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var newEmail = "john.doe@email.com";
 
             //Act
-            var emailChanged = await fixture.Client.PostAsJsonAsync("/users/change-email", new { id = user!.Id, newemail = newEmail });
+            var emailChanged = await fixture.Client.PutAsJsonAsync("/users", new { id = user!.Id, newemail = newEmail });
 
             //Assert
             await fixture.Factory.FlushMetricsAsync();
@@ -63,7 +63,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>();
             
             //Act
-            var response = await fixture.Client.PostAsJsonAsync("/users/change-email", new { id = user!.Id, newemail = string.Empty });
+            var response = await fixture.Client.PutAsJsonAsync("/users", new { id = user!.Id, newemail = string.Empty });
             var message = await response.Content.ReadAsStringAsync();
 
             //Assert
@@ -75,7 +75,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         public async Task Should_return_404_when_user_wasnt_found()
         {
             //Act
-            var response = await fixture.Client.PostAsJsonAsync("/users/change-email", new { id = Guid.Empty, newemail = string.Empty });
+            var response = await fixture.Client.PutAsJsonAsync("/users", new { id = Guid.Empty, newemail = string.Empty });
             var message = await response.Content.ReadAsStringAsync();
 
             //Assert
