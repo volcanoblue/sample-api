@@ -22,7 +22,6 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 
                 (int StatusCode, string Message) = result.ErrorValue switch
                 {
-                    OperationCancelledError => (StatusCodes.Status422UnprocessableEntity, "Operation cancelled"),
                     EmptyNameError => (StatusCodes.Status400BadRequest, "Name cannot be empty"),
                     EmptyEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
                     _ => (StatusCodes.Status400BadRequest, "Unknown error occurred")
