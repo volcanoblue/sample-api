@@ -16,14 +16,16 @@ namespace VolcanoBlue.SampleApi.Infrastructure.Observability
                 .WithTracing(tracing =>
                 {
                     tracing.AddAspNetCoreInstrumentation()
-                           .AddHttpClientInstrumentation()
-                           .AddOtlpExporter();
+                           .AddHttpClientInstrumentation();
+                           //Uncomment the following line to enable tracing export in production
+                           //.AddOtlpExporter();
                 })
                 .WithMetrics(metrics =>
                 {
                     metrics.AddAspNetCoreInstrumentation()
-                           .AddHttpClientInstrumentation()
-                           .AddOtlpExporter();
+                           .AddHttpClientInstrumentation();
+                           //Uncomment the following line to enable tracing export in production
+                           //.AddOtlpExporter();
                 })
                 .WithLogging(logging =>
                 {
