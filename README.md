@@ -287,7 +287,7 @@ Centralized exception handling at application level.
 
 ---
 
-## Domain Model
+## Sample Domain Model
 
 ### User Entity (Aggregate Root)
 
@@ -307,10 +307,6 @@ Centralized exception handling at application level.
 - Public methods enforce business rules
 - Impossible to bypass validation
 - Self-contained business logic
-
----
-
-## Sample Use Cases
 
 ### Create User
 
@@ -363,7 +359,7 @@ Registers all application services:
 
 **Configuration Strategy:**
 - Development: InMemoryUserRepository
-- Production: DatabaseUserRepository (to be implemented)
+- Production: DatabaseUserRepository (needs to be implemented)
 
 **Benefits:**
 - Change from in-memory to database requires one line change
