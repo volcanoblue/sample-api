@@ -16,7 +16,8 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var userId = Guid.NewGuid();
             await repo.SaveAsync(User.Create(userId, "John", "john@email.com"), CancellationToken.None);
             var handler = new ChangeEmailHandler(repo, store);
-            var command = new ChangeEmailCommand(userId, "john@email2.com");
+            var newEmail = "john@email2.com";
+            var command = new ChangeEmailCommand(userId, newEmail);
             var ct = CancellationToken.None;
 
             //Act
@@ -24,8 +25,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 
             //Assert
             Assert.True(result);
-            var user = repo.GetByIdAsync(userId, ct).ResultValue.Get();
-            Assert.Equal("john@email2.com", user.Email);
+            Assert.Equal(newEmail, (await repo.GetByIdAsync(userId, ct)).ResultValue.Email);
         }
 
         [Fact]

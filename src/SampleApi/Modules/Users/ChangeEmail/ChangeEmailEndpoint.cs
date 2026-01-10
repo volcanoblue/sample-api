@@ -1,5 +1,6 @@
 ﻿using Moonad;
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Command;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
@@ -16,7 +17,6 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                 CancellationToken ct) =>                                      // Cancellation token from HTTP context
             {
                 var emailChanged = await handler.HandleAsync(command, ct);
-                
                 if (emailChanged)
                 {
                     var metrics = app.Services.GetRequiredService<ChangeEmailMetrics>();

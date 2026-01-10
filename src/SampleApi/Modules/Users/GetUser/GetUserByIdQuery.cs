@@ -1,4 +1,4 @@
-﻿using VolcanoBlue.SampleApi.Abstractions;
+﻿using VolcanoBlue.Core.Query;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.GetUser
 {

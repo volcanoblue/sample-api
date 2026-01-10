@@ -1,10 +1,11 @@
 ﻿using Moonad;
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Command;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
-    public sealed class CreateUserHandler(IUserRepository repository, IUserViewStore storage)
+    public sealed class CreateUserHandler(IUserRepository userRepository, IUserViewStore userViewStorage)
         : ICommandHandler<CreateUserCommand, User, IError>
     {
         public async Task<Result<User, IError>> HandleAsync(CreateUserCommand command, CancellationToken ct)
@@ -13,11 +14,12 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
             if (userCreated.IsError)
                 return userCreated;
 
-            var userSaved = await repository.SaveAsync(userCreated, ct);
+            var userSaved = await userRepository.SaveAsync(userCreated, ct);
             if(userSaved.IsError)
                 return Result<User, IError>.Error(userSaved.ErrorValue);
 
-            var viewSaved = await storage.StoreAsync(UserViewMapper.FromDomain(userCreated.ResultValue), ct);
+            // This is a dual-write scenario; in a real-world app we'd need to handle potential inconsistencies
+            var viewSaved = await userViewStorage.StoreAsync(UserViewMapper.FromEntity(userCreated.ResultValue), ct);
             if(viewSaved.IsError)
                 return Result<User, IError>.Error(viewSaved.ErrorValue);
 

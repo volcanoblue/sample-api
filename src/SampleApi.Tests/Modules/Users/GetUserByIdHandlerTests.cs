@@ -20,8 +20,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 
             //Assert
             Assert.True(result.IsOk);
-            Assert.True(result.ResultValue.IsSome);
-            Assert.Equal(userView, result.ResultValue.Get());
+            Assert.Equal(userView, result.ResultValue);
         }
 
         [Fact]
@@ -35,7 +34,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 
             //Assert
             Assert.True(result.IsError);
-            Assert.IsType<UserNotFoundError>(result.ErrorValue);
+            Assert.IsType<UserViewNotFoundError>(result.ErrorValue);
         }
     }
 }

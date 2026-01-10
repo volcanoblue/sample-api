@@ -1,16 +1,32 @@
-﻿using VolcanoBlue.SampleApi.Abstractions;
+﻿using VolcanoBlue.Core.Error;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Shared
 {
-    public static class UserErrors
-    {
-        public static readonly EmptyNameError EmptyName;
-        public static readonly EmptyEmailError EmptyEmail;
-        public static readonly UserNotFoundError UserNotFound;
+    public sealed class EmptyNameError : IError
+    { 
+        private EmptyNameError() { }
+
+        public static readonly EmptyNameError Instance = new();
     }
 
-    // Specific error types
-    public readonly struct EmptyNameError : IError { }
-    public readonly struct EmptyEmailError : IError { }
-    public readonly struct UserNotFoundError : IError { }
+    public sealed class EmptyEmailError : IError 
+    { 
+        private EmptyEmailError() { }
+
+        public static readonly EmptyEmailError Instance = new();
+    }
+
+    public sealed class UserNotFoundError : IError 
+    { 
+        private UserNotFoundError() { }
+
+        public static readonly UserNotFoundError Instance = new();
+    }
+
+    public sealed class UserViewNotFoundError : IError
+    {
+        private UserViewNotFoundError() { }
+
+        public static readonly UserViewNotFoundError Instance = new();
+    }
 }

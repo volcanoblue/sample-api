@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using VolcanoBlue.SampleApi.Modules.Users.ChangeEmail;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
@@ -17,7 +18,6 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
     {
         private MeterProvider? _meterProvider;
 
-        public FakeUserRepository UserRepository { get; } = new();
         public FakeUserViewStore UserViewStore { get; } = new();
         public InMemoryTelemetry Telemetry { get; } = new();
 
@@ -27,9 +27,7 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
 
             builder.ConfigureServices(services =>
             {
-                services.RemoveAll<IUserRepository>();
                 services.RemoveAll<IUserViewStore>();
-                services.AddSingleton<IUserRepository>(UserRepository);
                 services.AddSingleton<IUserViewStore>(UserViewStore);
                 services.AddSingleton<ChangeEmailMetrics>();
                 
@@ -38,6 +36,10 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
                     services.Remove(descriptor);
 
                 services.AddOpenTelemetry()
+                        .ConfigureResource(resource =>
+                        {
+                            resource.AddService("SampleApiTests");
+                        })
                         .WithTracing(tpb =>
                         {
                             tpb.AddAspNetCoreInstrumentation()
@@ -61,6 +63,8 @@ namespace VolcanoBlue.SampleApi.Tests.Api.Fixture
                     });
                 });
             });
+
+            base.ConfigureWebHost(builder);
         }
 
         public async Task FlushMetricsAsync()

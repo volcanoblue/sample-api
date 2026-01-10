@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace VolcanoBlue.SampleApi.Abstractions
+namespace VolcanoBlue.Core.Command
 {
     public interface ICommandHandler<in TCommand, TResult, TError> 
         where TCommand : ICommand

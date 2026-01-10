@@ -1,7 +1,7 @@
 ﻿using Moonad;
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Command;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
@@ -10,15 +10,13 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
     {
         public async Task<Result<Unit, IError>> HandleAsync(ChangeEmailCommand command, CancellationToken ct)
         {
-            var userFound = repository.GetByIdAsync(command.Id, ct);
+            var userFound = await repository.GetByIdAsync(command.Id, ct);
             if(userFound.IsError)
                 return Result<Unit, IError>.Error(userFound.ErrorValue);
 
-            var userOption = userFound.ResultValue;
-            if(userOption.IsNone)
-                return UserErrors.UserNotFound;
-
-            var emailChanged = userOption.Get().ChangeEmail(command.NewEmail);
+            var user = userFound.ResultValue;
+            
+            var emailChanged = user.ChangeEmail(command.NewEmail);
             if(emailChanged.IsError)
                 return emailChanged;
 
@@ -26,7 +24,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
             if(userSaved.IsError)
                 return userSaved;
 
-            var userView = UserViewMapper.FromDomain(userFound.ResultValue);
+            var userView = UserViewMapper.FromEntity(userFound.ResultValue);
             return await store.StoreAsync(userView, ct);
         }
     }

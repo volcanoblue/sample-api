@@ -21,7 +21,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             Assert.Equal(user!.Id, (await fixture.Factory
                                                  .UserViewStore
                                                  .GetByIdAsync(user.Id, CancellationToken.None))
-                                                 .ResultValue.Get().Id);
+                                                 .ResultValue.Id);
         }
 
         [Fact]

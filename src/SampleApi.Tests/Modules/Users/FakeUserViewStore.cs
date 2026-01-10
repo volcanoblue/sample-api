@@ -1,6 +1,6 @@
 ﻿using Moonad;
 using System.Collections.Concurrent;
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
@@ -10,12 +10,12 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
     {
         private readonly ConcurrentDictionary<Guid, UserView> _views = [];
 
-        public async Task<Result<Option<UserView>, IError>> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Result<UserView, IError>> GetByIdAsync(Guid id, CancellationToken ct)
         {
-            if(! _views.TryGetValue(id, out UserView? userView))
-                return UserErrors.UserNotFound;
+            if(_views.TryGetValue(id, out UserView? userView))
+                return await Task.FromResult(userView);
 
-            return await Task.FromResult(userView.ToOption());
+            return await Task.FromResult(UserViewNotFoundError.Instance);
         }
 
         public async Task<Result<Unit, IError>> StoreAsync(UserView userView, CancellationToken ct)

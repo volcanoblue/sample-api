@@ -1,4 +1,5 @@
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Command;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
@@ -24,7 +25,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                 {
                     EmptyNameError => (StatusCodes.Status400BadRequest, "Name cannot be empty"),
                     EmptyEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
-                    _ => (StatusCodes.Status400BadRequest, "Unknown error occurred")
+                    _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error occurred")
                 };
 
                 return Results.Problem(ProblemDetailsMapper.FromError(Message, context, StatusCode));

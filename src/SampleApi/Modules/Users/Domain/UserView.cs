@@ -4,7 +4,7 @@
 
     public static class UserViewMapper
     {
-        public static UserView FromDomain(User user) => 
+        public static UserView FromEntity(User user) => 
             new (user.Id, user.Name, user.Email);
     }
 }

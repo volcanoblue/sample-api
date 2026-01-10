@@ -1,7 +1,8 @@
 ﻿using Moonad;
 using System.Collections.Concurrent;
-using VolcanoBlue.SampleApi.Abstractions;
+using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
+using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 {
@@ -14,11 +15,12 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             return [.. _users.Values];
         }
 
-        public Result<Option<User>, IError> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Result<User, IError>> GetByIdAsync(Guid id, CancellationToken ct)
         {
-            return _users.TryGetValue(id, out User? user)
-                ? user.ToOption()
-                : Option.None<User>();
+            if (_users.TryGetValue(id, out User? user))
+                return await Task.FromResult(user);
+                
+            return await Task.FromResult(UserNotFoundError.Instance);
         }
 
         public async Task<Result<Unit, IError>> SaveAsync(User user, CancellationToken ct)
