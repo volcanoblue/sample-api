@@ -1,6 +1,7 @@
 using VolcanoBlue.SampleApi.Infrastructure.DependencyInjection;
 using VolcanoBlue.SampleApi.Infrastructure.Middleware;
 using VolcanoBlue.SampleApi.Infrastructure.Observability;
+using VolcanoBlue.SampleApi.Infrastructure.OpenApi;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Endpoints;
 
