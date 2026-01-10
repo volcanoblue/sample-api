@@ -5,12 +5,12 @@ using VolcanoBlue.SampleApi.Infrastructure.OpenApi;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Endpoints;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();                   // OpenAPI/Swagger documentation
 builder.Services.AddObservability();             // Telemetry (traces, metrics, logs)
 builder.Services.AddProblemDetailsWithTraceId(); // RFC 7807 Problem Details
+builder.Services.AddSwaggerGen();                // Swagger
 
 builder.Services.AddApplication();               // Domain and use case registrations
 
