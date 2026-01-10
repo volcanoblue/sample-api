@@ -25,11 +25,13 @@ Run the command below to create a new project based on the template
 
 ### Template Parameters
 
+```
 dotnet new volcanoapi -n Acme.ProductApi 
 --api-title "Product Management API" 
 --framework net9.0 
 --include-tests true 
 --enable-docker true
+```
 
 | Parameter         | Short | Type   | Default        | Description                           |
 |-------------------|-------|--------|----------------|---------------------------------------|
