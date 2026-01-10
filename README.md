@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This solution demonstrates a clean, maintainable ASP.NET Core 9.0 Web API implementing Hexagonal Architecture (Ports & Adapters) with functional programming principles.
+This solution demonstrates a clean, maintainable ASP.NET Core 10.0 Web API implementing Hexagonal Architecture (Ports & Adapters) with functional programming principles.
 
 The project showcases modern .NET development practices including:
 - Minimal APIs for lightweight HTTP endpoints
@@ -10,6 +10,7 @@ The project showcases modern .NET development practices including:
 - OpenTelemetry for observability (traces, metrics, logs)
 - RFC 7807 Problem Details for standardized error responses
 - Integration testing with WebApplicationFactory
+- Event Sourcing for audit trails and temporal queries
 
 ### Installation
 
@@ -28,19 +29,19 @@ Run the command below to create a new project based on the template
 ```
 dotnet new volcanoapi -n Acme.ProductApi 
 --api-title "Product Management API" 
---framework net9.0 
+--framework net10.0
 --include-tests true 
 --enable-docker true
 ```
 
-| Parameter         | Short | Type   | Default        | Description                           |
-|-------------------|-------|--------|----------------|---------------------------------------|
-| `--name`          | `-n`  | string | Directory name | Project name and root namespace       |
-| `--framework`     | `-f`  | choice | `net9.0`       | Target framework (`net9.0`, `net8.0`) |
-| `--include-tests` |       | bool   | `true`         | Include test project                  |
-| `--enable-docker` |       | bool   | `true`         | Include Docker files                  |
-| `--api-title`     |       | string | "Sample API"   | API title in Swagger                  |
-| `--skip-restore`  |       | bool   | `false`        | Skip automatic restore                |
+| Parameter         | Short | Type   | Default        | Description                                    |
+|-------------------|-------|--------|----------------|------------------------------------------------|
+| `--name`          | `-n`  | string | Directory name | Project name and root namespace                |
+| `--framework`     | `-f`  | choice | `net10.0`      | Target framework (`net10`, `net9.0`, `net8.0`) |
+| `--include-tests` |       | bool   | `true`         | Include test project                           |
+| `--enable-docker` |       | bool   | `true`         | Include Docker files                           |
+| `--api-title`     |       | string | "Sample API"   | API title in Swagger                           |
+| `--skip-restore`  |       | bool   | `false`        | Skip automatic restore                         |
 
 ---
 
@@ -52,15 +53,20 @@ Access Swagger UI at: `https://localhost:<port>/swagger`
 The solution consists of two main projects:
 
 ### 1. VolcanoBlue.SampleApi (Main Application)
-- **Target Framework**: .NET 9.0
+- **Target Framework**: .NET 10.0
 - **Type**: ASP.NET Core Web API
 - **Entry Point**: Program.cs
 - **Docker Support**: Linux containers
 
-### 2. VolcanoBlue.SampleApi.Abstractions (Shared Contracts)
+### 2. VolcanoBlue.Core (Shared Contracts)
 - **Target Framework**: .NET Standard 2.1
 - **Contains**: Interfaces, abstractions, shared types
 - **Purpose**: Define contracts between layers
+
+### 3. VolcanoBlue.EventSourcing (Event Sourcing Infrastructure)
+- **Target Framework**: .NET 10
+- **Contains**: Event Store, Event Sourced Entities, Event Serialization
+- **Purpose**: Provide event sourcing capabilities for domain aggregates
 
 ---
 
@@ -98,6 +104,34 @@ The application is organized in distinct layers with clear boundaries:
   - Easy to locate where changes should be made
   - Reduced coupling between components
   - Better code organization and discoverability
+
+---
+
+### Event Sourcing
+
+Event Sourcing is a pattern where state changes are stored as a sequence of events rather than storing just the current state. This solution includes a complete Event Sourcing infrastructure that can be used to build event-sourced aggregates.
+
+**Advantages:**
+
+✓ **Complete Audit Trail**
+  - Every state change is recorded as an immutable event
+  - Full history of what happened, when, and why
+  - Compliance and regulatory requirements easily met
+
+✓ **Temporal Queries**
+  - Reconstruct entity state at any point in time
+  - Analyze historical trends and patterns
+  - Debug production issues by replaying events
+
+✓ **Scalability**
+  - Append-only storage (no updates or deletes)
+  - Optimized for write performance
+  - Read models can be optimized independently
+
+✓ **Business Insights**
+  - Events capture business intent, not just final state
+  - Rich domain events enable analytics
+  - Event stream as source of truth
 
 ---
 
@@ -406,7 +440,7 @@ Registers all application services:
 ## Troubleshooting
 
 ### Build Errors
-- Ensure .NET 9.0 SDK is installed
+- Ensure .NET 10.0 SDK is installed
 - Restore NuGet packages
 
 ### Runtime Errors
@@ -422,7 +456,7 @@ Registers all application services:
 
 ## Version Information
 
-- **.NET Version**: 9.0
+- **.NET Version**: 10.0
 - **.NET Standard**: 2.1 (Abstractions project)
 - **C# Language Version**: Latest (implied by .NET 9)
 - **Nullable Reference Types**: Enabled
