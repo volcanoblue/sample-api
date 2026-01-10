@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
 using VolcanoBlue.SampleApi.Tests.Api.Fixture;
 
 namespace VolcanoBlue.SampleApi.Tests.Modules.Users
@@ -8,10 +7,10 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
     public class CreateUserEndpointTests(ApiTestFixture fixture) : IClassFixture<ApiTestFixture>
     {
         [Fact]
-        public async Task Should_return_201_when_command_is_valid()
+        public async Task Should_have_tracing_activity_when_command_is_valid()
         {
             //Arrange
-            var activities = fixture.Factory.Telemetry.Traces;
+            var spans = fixture.Factory.Telemetry.Traces;
 
             //Act
             var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
@@ -20,7 +19,19 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             //Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             Assert.IsType<Guid>(user!.Id);
-            Assert.Contains(activities, act => act.DisplayName.Contains("POST /users"));
+            Assert.Contains(spans, span => span.DisplayName.Contains("POST /users"));
+        }
+
+        [Fact]
+        public async Task Should_return_201_when_command_is_valid()
+        {
+            //Act
+            var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
+            var user = await response.Content.ReadFromJsonAsync<UserCreatedResponse>();
+
+            //Assert
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.IsType<Guid>(user!.Id);
         }
 
         [Fact]
