@@ -16,7 +16,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Persistence
             if(user)
                 return await Task.FromResult(user.Get());
 
-            return await Task.FromResult(UserNotFoundError.Instance);            
+            return await Task.FromResult(UserViewNotFoundError.Instance);
         }
 
         public async Task<Result<Unit, IError>> StoreAsync(UserView userView, CancellationToken ct)

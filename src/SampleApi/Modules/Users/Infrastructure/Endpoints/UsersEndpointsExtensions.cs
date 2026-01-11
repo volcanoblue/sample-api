@@ -4,7 +4,7 @@ using VolcanoBlue.SampleApi.Modules.Users.GetUser;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Endpoints
 {
-    public static class UsersEndpointsMapper
+    public static class UsersEndpointsExtensions
     {
         public static WebApplication MapUsers(this WebApplication app)
         {

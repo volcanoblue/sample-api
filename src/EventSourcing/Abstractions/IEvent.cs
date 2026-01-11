@@ -2,6 +2,6 @@
 {
     public interface IEvent
     {
-        int EventId { get; }
+        long EventId { get; }
     }
 }

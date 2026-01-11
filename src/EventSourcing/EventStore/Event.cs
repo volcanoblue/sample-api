@@ -1,4 +1,4 @@
 ﻿namespace VolcanoBlue.EventSourcing.EventStore
 {
-    internal record Event(int Id, string StreamId, string Created, string EventType, string Data);
+    internal record Event(long Id, string StreamId, string OccurredAt, string EventType, string Data);
 }

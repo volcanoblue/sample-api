@@ -25,6 +25,35 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         }
 
         [Fact]
+        public async Task Should_return_304_when_etag_matches()
+        {
+            //Arrange
+            var client = fixture.Client;
+            var ct = CancellationToken.None;
+            var userCreated = await client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" }, ct);
+            var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>();
+            var newEmail = "john.doe@email.com";
+            
+            //Act
+
+            var userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
+            var etag = userViewResponse.Headers.ETag!.Tag;
+
+            await client.PatchAsJsonAsync("/users", new { id = user!.Id, newemail = newEmail }, ct);
+
+            client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(etag);
+            userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
+            etag = userViewResponse.Headers.ETag!.Tag;
+
+            client.DefaultRequestHeaders.IfNoneMatch.Clear();
+            client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(etag);
+            userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.NotModified, userViewResponse.StatusCode);
+        }
+
+        [Fact]
         public async Task Should_return_404_when_user_was_not_found()
         {
             //Act

@@ -10,7 +10,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
     {
         public static WebApplication MapUsersChangeEmail(this WebApplication app)
         {
-            app.MapPut("/users", async (
+            app.MapPatch("/users", async (
                 HttpContext http,                                             // HTTP context for response generation
                 ChangeEmailCommand command,                                   // Automatically deserialized from request body
                 ICommandHandler<ChangeEmailCommand, Unit, IError> handler,    // Input port injected by DI
@@ -22,7 +22,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                     var metrics = app.Services.GetRequiredService<ChangeEmailMetrics>();
                     metrics.EmailChanged.Add(1);
                     
-                    return Results.Ok();
+                    return Results.NoContent();
                 }
 
                 (int StatusCode, string Message) = emailChanged.ErrorValue switch
