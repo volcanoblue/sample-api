@@ -1,8 +1,12 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
 
 namespace VolcanoBlue.SampleApi.Infrastructure.Cache
 {
+    /// <summary>
+    /// [INFRASTRUCTURE] Utility for generating and validating HTTP ETags for cache optimization.
+    /// Architectural Role: Implements conditional caching mechanism (HTTP 304 Not Modified)
+    /// reducing network traffic by allowing clients to validate if resources have been modified.
+    /// </summary>
     public static class ETag
     {
         public static string Create(string source)

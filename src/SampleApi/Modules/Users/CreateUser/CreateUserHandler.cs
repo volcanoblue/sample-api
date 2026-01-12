@@ -5,6 +5,11 @@ using VolcanoBlue.SampleApi.Modules.Users.Domain;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
+    /// <summary>
+    /// [APPLICATION - USE CASE] Handler that orchestrates the create user use case.
+    /// Architectural Role: Implements application logic, coordinates domain entity and repository.
+    /// Implements Railway-Oriented Programming with Result types for explicit error handling.
+    /// </summary>
     public sealed class CreateUserHandler(IUserRepository userRepository, IUserViewStore userViewStorage)
         : ICommandHandler<CreateUserCommand, User, IError>
     {

@@ -2,6 +2,11 @@
 
 namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - MIDDLEWARE] Global middleware for capturing unhandled exceptions.
+    /// Architectural Role: Ensures unexpected exceptions are converted to RFC 7807 Problem Details responses.
+    /// Prevents sensitive information leakage and maintains consistency in error responses.
+    /// </summary>
     public sealed class ExceptionMiddleware(RequestDelegate next, IProblemDetailsService problemDetails)
     {
         public async Task InvokeAsync(HttpContext context)

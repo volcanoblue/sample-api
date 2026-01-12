@@ -1,12 +1,17 @@
 ﻿using Moonad;
 using System.Collections.Immutable;
 using VolcanoBlue.Core.Error;
-using VolcanoBlue.EventSourcing;
 using VolcanoBlue.EventSourcing.Abstractions;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Domain
 {
+    /// <summary>
+    /// [DOMAIN - AGGREGATE ROOT] User domain entity with Event Sourcing.
+    /// Architectural Role: Encapsulates business logic and validation rules for users.
+    /// Implements Event Sourcing to maintain complete history of state changes through events.
+    /// Ensures business invariants (name and email required) and exposes only valid operations.
+    /// </summary>
     public sealed partial class User : EventSourcedEntity
     {
         public Guid Id { get; private set; } = Guid.Empty;

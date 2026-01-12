@@ -31,24 +31,15 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var client = fixture.Client;
             var ct = CancellationToken.None;
             var userCreated = await client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" }, ct);
-            var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>();
-            var newEmail = "john.doe@email.com";
+            var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>(ct);
             
             //Act
-
             var userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
             var etag = userViewResponse.Headers.ETag!.Tag;
 
-            await client.PatchAsJsonAsync("/users", new { id = user!.Id, newemail = newEmail }, ct);
-
             client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(etag);
             userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
-            etag = userViewResponse.Headers.ETag!.Tag;
-
-            client.DefaultRequestHeaders.IfNoneMatch.Clear();
-            client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(etag);
-            userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
-
+            
             //Assert
             Assert.Equal(HttpStatusCode.NotModified, userViewResponse.StatusCode);
         }

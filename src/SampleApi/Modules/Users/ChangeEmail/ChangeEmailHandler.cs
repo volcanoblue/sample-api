@@ -5,6 +5,11 @@ using VolcanoBlue.SampleApi.Modules.Users.Domain;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
+    /// <summary>
+    /// [APPLICATION - USE CASE] Handler that orchestrates the change email use case.
+    /// Architectural Role: Fetches user, applies change through domain method, and persists.
+    /// Ensures business rules are enforced through domain entity.
+    /// </summary>
     public sealed class ChangeEmailHandler(IUserRepository repository, IUserViewStore store)
         : ICommandHandler<ChangeEmailCommand, Unit, IError>
     {

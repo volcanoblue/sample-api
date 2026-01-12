@@ -6,6 +6,11 @@ using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - PRIMARY ADAPTER] HTTP endpoint for user creation.
+    /// Architectural Role: Primary adapter that translates HTTP requests into domain commands.
+    /// Maps domain errors to appropriate HTTP status codes following RFC 7807 Problem Details.
+    /// </summary>
     public static class CreateUserEndpoint
     {
         public static WebApplication MapCreateUser(this WebApplication app)

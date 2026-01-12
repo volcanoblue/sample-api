@@ -5,6 +5,11 @@ using OpenTelemetry.Trace;
 
 namespace VolcanoBlue.SampleApi.Infrastructure.Observability
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - OBSERVABILITY] Configures OpenTelemetry for traces, metrics, and logs.
+    /// Architectural Role: Enables vendor-neutral distributed observability.
+    /// Allows exporting telemetry to monitoring systems (Prometheus, Grafana, Application Insights).
+    /// </summary>
     public static class OpenTelemetryExtensions
     {
         public static IServiceCollection AddObservability(this IServiceCollection services)

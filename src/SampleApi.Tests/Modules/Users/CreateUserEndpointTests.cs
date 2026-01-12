@@ -15,6 +15,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             //Act
             var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
             var user = await response.Content.ReadFromJsonAsync<UserCreatedResponse>();
+            await Task.Delay(100); // Give some time for the telemetry to be recorded
 
             //Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);

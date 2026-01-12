@@ -12,6 +12,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VolcanoBlue.SampleApi.Infrastructure.DependencyInjection
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - DEPENDENCY INJECTION] Registers Users module services in container.
+    /// Architectural Role: Configures input ports (handlers), output ports (repositories) and cross-cutting concerns (metrics).
+    /// Centralizes Users module dependency configuration allowing easy implementation substitution.
+    /// </summary>
     public static class UsersDependencyInjection
     {
         public static IServiceCollection AddUsersModule(this IServiceCollection services)

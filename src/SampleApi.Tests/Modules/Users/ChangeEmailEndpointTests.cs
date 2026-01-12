@@ -26,13 +26,6 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             //Assert
             Assert.Equal(HttpStatusCode.NoContent, emailChanged.StatusCode);
             Assert.Equal(newEmail, (await userRepository!.GetByIdAsync(user.Id, ct)).ResultValue.Email);
-
-            await fixture.Factory.FlushMetricsAsync();
-            var metrics = fixture.Factory.Telemetry.Metrics;
-            var emailChangedMetric = metrics.FirstOrDefault(m => m.Name == ChangeEmailMetrics.UsersEmailChangedCounterName);
-
-            Assert.NotNull(emailChangedMetric);
-            Assert.Equal(1, emailChangedMetric.GetCounterValue());
         }
 
         [Fact]

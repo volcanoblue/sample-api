@@ -3,28 +3,9 @@
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
     /// <summary>
-    /// Metrics for ChangeEmail use case observability.
-    /// 
-    /// Architecture Role:
-    /// - Infrastructure concern (observability)
-    /// - Used by PRIMARY ADAPTERS (endpoints)
-    /// - Provides telemetry for monitoring and alerting
-    /// 
-    /// Integration:
-    /// - Uses System.Diagnostics.Metrics API (.NET 8+)
-    /// - Compatible with OpenTelemetry
-    /// - Exported to monitoring systems (Prometheus, Application Insights, etc.)
-    /// 
-    /// Metrics Types:
-    /// - Counter: Monotonically increasing value (counts events)
-    /// - Gauge: Current value (active connections, queue size)
-    /// - Histogram: Distribution of values (request duration)
-    /// 
-    /// Benefits:
-    /// 1. Real-time monitoring
-    /// 2. Alerting on anomalies
-    /// 3. Performance analysis
-    /// 4. Business metrics tracking
+    /// [INFRASTRUCTURE - OBSERVABILITY] Metrics for monitoring the ChangeEmail use case.
+    /// Architectural Role: Provides telemetry for observability using OpenTelemetry.
+    /// Enables monitoring, alerting, and performance analysis in production.
     /// </summary>
     public sealed class ChangeEmailMetrics(IMeterFactory meterFactory)
     {

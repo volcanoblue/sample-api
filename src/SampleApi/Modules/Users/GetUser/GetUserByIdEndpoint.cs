@@ -5,6 +5,11 @@ using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.GetUser
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - PRIMARY ADAPTER] HTTP endpoint for user query.
+    /// Architectural Role: Primary adapter for queries. Implements HTTP caching with ETags
+    /// to reduce traffic (returns 304 Not Modified when resource hasn't changed).
+    /// </summary>
     public static class GetUserByIdEndpoint
     {
         public static WebApplication MapGetUserById(this WebApplication app)
@@ -18,7 +23,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.GetUser
                 if (result)
                 {
                     UserView view = result.ResultValue;
-                    var eTag = ETag.Create(view.Email);                                  // Create ETag based on user's email since it can change
+                    var eTag = ETag.Create($"{view.Id}-{view.Email}");                   // Create ETag based on user's email since it can change
 
                     if (ETag.Match(eTag, httpContext))
                         return Results.StatusCode(StatusCodes.Status304NotModified);

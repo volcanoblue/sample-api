@@ -6,6 +6,11 @@ using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
+    /// <summary>
+    /// [INFRASTRUCTURE - PRIMARY ADAPTER] HTTP endpoint for email change.
+    /// Architectural Role: Primary adapter that exposes use case via HTTP PATCH.
+    /// Records observability metrics after successful execution.
+    /// </summary>
     public static class ChangeEmailEndpoint
     {
         public static WebApplication MapUsersChangeEmail(this WebApplication app)
@@ -14,12 +19,12 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                 HttpContext http,                                             // HTTP context for response generation
                 ChangeEmailCommand command,                                   // Automatically deserialized from request body
                 ICommandHandler<ChangeEmailCommand, Unit, IError> handler,    // Input port injected by DI
-                CancellationToken ct) =>                                      // Cancellation token from HTTP context
+                CancellationToken ct,
+                ChangeEmailMetrics metrics) =>                                      // Cancellation token from HTTP context
             {
                 var emailChanged = await handler.HandleAsync(command, ct);
                 if (emailChanged)
                 {
-                    var metrics = app.Services.GetRequiredService<ChangeEmailMetrics>();
                     metrics.EmailChanged.Add(1);
                     
                     return Results.NoContent();
