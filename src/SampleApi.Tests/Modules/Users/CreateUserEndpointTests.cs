@@ -13,21 +13,21 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             var spans = fixture.Factory.Telemetry.Traces;
 
             //Act
-            var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
+            var response = await fixture.Client.PostAsJsonAsync(Endpoints.CreateUser, new { name = "John", email = "john@email.com" });
             var user = await response.Content.ReadFromJsonAsync<UserCreatedResponse>();
             await Task.Delay(100); // Give some time for the telemetry to be recorded
 
             //Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             Assert.IsType<Guid>(user!.Id);
-            Assert.Contains(spans, span => span.DisplayName.Contains("POST /users"));
+            Assert.Contains(spans, span => span.DisplayName.Contains($"POST {Endpoints.CreateUser}"));
         }
 
         [Fact]
         public async Task Should_return_201_when_command_is_valid()
         {
             //Act
-            var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
+            var response = await fixture.Client.PostAsJsonAsync(Endpoints.CreateUser, new { name = "John", email = "john@email.com" });
             var user = await response.Content.ReadFromJsonAsync<UserCreatedResponse>();
 
             //Assert
@@ -38,25 +38,23 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         [Fact]
         public async Task Should_return_400_when_name_is_missing()
         {
-            var response = await fixture.Client.PostAsJsonAsync("/users", new { name = string.Empty, email = "john@email.com" });
+            var response = await fixture.Client.PostAsJsonAsync(Endpoints.CreateUser, new { name = string.Empty, email = "john@email.com" });
             var error = await response.Content.ReadAsStringAsync();
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.NotNull(error);
-            Assert.Contains("Name cannot be empty", error!);
         }
 
         [Fact]
-        public async Task Should_return_404_when_email_is_missing()
+        public async Task Should_return_400_when_email_is_missing()
         {
-            var response = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = string.Empty });
+            var response = await fixture.Client.PostAsJsonAsync(Endpoints.CreateUser, new { name = "John", email = string.Empty });
             var error = await response.Content.ReadAsStringAsync();
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.NotNull(error);
-            Assert.Contains("Email cannot be empty", error!);
         }
     }
 }

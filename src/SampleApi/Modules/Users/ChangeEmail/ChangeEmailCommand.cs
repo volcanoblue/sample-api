@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VolcanoBlue.Core.Command;
+using VolcanoBlue.SampleApi.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
-    public sealed record ChangeEmailCommand([Required] Guid Id, [EmailAddress]string NewEmail) : ICommand;
+    public sealed record ChangeEmailCommand([Required] Guid Id, [Required][Email]string NewEmail) : ICommand;
 }

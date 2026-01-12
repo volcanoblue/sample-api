@@ -15,11 +15,11 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
     {
         public static WebApplication MapCreateUser(this WebApplication app)
         {
-            app.MapPost("/users", async (CreateUserCommand command,           // Automatically deserialized from request body
-                ICommandHandler<CreateUserCommand, User, IError> handler,     // Input port injected by DI
-                HttpContext context,                                          // HTTP context for response generation
-                CancellationToken ct,                                         // Cancellation token from HTTP context
-                ILogger<CreateUserCommand> logger) =>                         // Logger injected by DI
+            app.MapPost("/users/create-user", async (CreateUserCommand command,     // Automatically deserialized from request body
+                ICommandHandler<CreateUserCommand, User, IError> handler,           // Input port injected by DI
+                HttpContext context,                                                // HTTP context for response generation
+                CancellationToken ct,                                               // Cancellation token from HTTP context
+                ILogger<CreateUserCommand> logger) =>                               // Logger injected by DI
             {
                 var result = await handler.HandleAsync(command, ct);
                 if (result)

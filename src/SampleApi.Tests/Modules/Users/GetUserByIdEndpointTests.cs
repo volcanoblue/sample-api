@@ -6,11 +6,13 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 {
     public class GetUserByIdEndpointTests(ApiTestFixture fixture) : IClassFixture<ApiTestFixture>
     {
+        
+
         [Fact]
         public async Task Should_return_200_when_query_has_a_result()
         {
             //Arrange
-            var userCreated = await fixture.Client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" });
+            var userCreated = await fixture.Client.PostAsJsonAsync(Endpoints.CreateUser, new { name = "John", email = "john@email.com" });
             var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>();
             
             //Act
@@ -30,15 +32,15 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
             //Arrange
             var client = fixture.Client;
             var ct = CancellationToken.None;
-            var userCreated = await client.PostAsJsonAsync("/users", new { name = "John", email = "john@email.com" }, ct);
+            var userCreated = await client.PostAsJsonAsync(Endpoints.CreateUser, new { name = "John", email = "john@email.com" }, ct);
             var user = await userCreated.Content.ReadFromJsonAsync<UserCreatedResponse>(ct);
             
             //Act
-            var userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
+            var userViewResponse = await client.GetAsync($"{Endpoints.GetUserById}/{user!.Id}", ct);
             var etag = userViewResponse.Headers.ETag!.Tag;
 
             client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(etag);
-            userViewResponse = await client.GetAsync($"/users/{user!.Id}", ct);
+            userViewResponse = await client.GetAsync($"{Endpoints.GetUserById}/{user!.Id}", ct);
             
             //Assert
             Assert.Equal(HttpStatusCode.NotModified, userViewResponse.StatusCode);
@@ -48,7 +50,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         public async Task Should_return_404_when_user_was_not_found()
         {
             //Act
-            var userViewResponse = await fixture.Client.GetAsync($"/users/{Guid.Empty}", CancellationToken.None);
+            var userViewResponse = await fixture.Client.GetAsync($"{Endpoints.GetUserById}/{Guid.Empty}", CancellationToken.None);
 
             //Assert
             Assert.Equal(HttpStatusCode.NotFound, userViewResponse.StatusCode);

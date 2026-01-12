@@ -15,12 +15,12 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
     {
         public static WebApplication MapUsersChangeEmail(this WebApplication app)
         {
-            app.MapPatch("/users", async (
+            app.MapPost("/users/change-email", async (
                 HttpContext http,                                             // HTTP context for response generation
                 ChangeEmailCommand command,                                   // Automatically deserialized from request body
                 ICommandHandler<ChangeEmailCommand, Unit, IError> handler,    // Input port injected by DI
                 CancellationToken ct,
-                ChangeEmailMetrics metrics) =>                                      // Cancellation token from HTTP context
+                ChangeEmailMetrics metrics) =>                                // Cancellation token from HTTP context
             {
                 var emailChanged = await handler.HandleAsync(command, ct);
                 if (emailChanged)

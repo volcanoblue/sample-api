@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VolcanoBlue.Core.Command;
+using VolcanoBlue.SampleApi.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
@@ -8,5 +9,5 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
     /// Architectural Role: Represents intention to create user. Input port in Hexagonal Architecture.
     /// Defines technology-agnostic input contract (HTTP, gRPC, CLI, etc).
     /// </summary>
-    public sealed record CreateUserCommand([Required] string Name, [EmailAddress] string Email) : ICommand;
+    public sealed record CreateUserCommand([Required] string Name, [Required][Email] string Email) : ICommand;
 }
