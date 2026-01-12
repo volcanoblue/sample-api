@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VolcanoBlue.Core.Command;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
+using VolcanoBlue.Core.DataAnnotations;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {

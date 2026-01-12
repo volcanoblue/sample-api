@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VolcanoBlue.SampleApi.Shared;
 
-namespace VolcanoBlue.SampleApi.Modules.Users.Shared
+namespace VolcanoBlue.Core.DataAnnotations
 {
     /// <summary>
     /// [INFRASTRUCTURE - VALIDATION ATTRIBUTE] Custom validation attribute for ASP.NET data annotations.
