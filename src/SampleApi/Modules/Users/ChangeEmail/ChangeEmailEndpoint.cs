@@ -2,6 +2,7 @@
 using VolcanoBlue.Core.Command;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
@@ -33,7 +34,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                 (int StatusCode, string Message) = emailChanged.ErrorValue switch
                 {
                     UserNotFoundError => (StatusCodes.Status404NotFound, "User not found"),
-                    EmptyEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
+                    InvalidEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error")
                 };
 

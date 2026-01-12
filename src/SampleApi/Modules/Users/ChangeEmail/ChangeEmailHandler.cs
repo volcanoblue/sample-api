@@ -29,7 +29,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
             if(userSaved.IsError)
                 return userSaved;
 
-            var userView = UserViewMapper.FromEntity(userFound.ResultValue);
+            var userView = UserView.From(userFound.ResultValue);
             return await store.StoreAsync(userView, ct);
         }
     }

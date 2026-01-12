@@ -2,6 +2,7 @@ using VolcanoBlue.Core.Command;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
 using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
@@ -27,8 +28,8 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 
                 (int StatusCode, string Message) = result.ErrorValue switch
                 {
-                    EmptyNameError => (StatusCodes.Status400BadRequest, "Name cannot be empty"),
-                    EmptyEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
+                    InvalidNameError => (StatusCodes.Status400BadRequest, "Name cannot be empty"),
+                    InvalidEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty or in a invalid format"),
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error occurred")
                 };
 

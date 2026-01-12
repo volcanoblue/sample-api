@@ -24,7 +24,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                 return Result<User, IError>.Error(userSaved.ErrorValue);
 
             // This is a dual-write scenario; in a real-world app we'd need to handle potential inconsistencies
-            var viewSaved = await userViewStorage.StoreAsync(UserViewMapper.FromEntity(userCreated.ResultValue), ct);
+            var viewSaved = await userViewStorage.StoreAsync(UserView.From(userCreated.ResultValue), ct);
             if(viewSaved.IsError)
                 return Result<User, IError>.Error(viewSaved.ErrorValue);
 

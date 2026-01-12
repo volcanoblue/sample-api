@@ -1,4 +1,5 @@
 ﻿using VolcanoBlue.EventSourcing.Abstractions;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Domain
 {
@@ -9,7 +10,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Domain
     /// </summary>
     public sealed partial class User
     {
-        public sealed record UserCreated(long EventId, Guid Id, string Name, string Email) : IEvent;
-        public sealed record UserEmailChanged(long EventId, Guid Id, string NewEmail) : IEvent;
+        public sealed record UserCreated(long EventId, Guid Id, Name Name, Email Email) : IEvent;
+        public sealed record UserEmailChanged(long EventId, Guid Id, Email NewEmail) : IEvent;
     }
 }

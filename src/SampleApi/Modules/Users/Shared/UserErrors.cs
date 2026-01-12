@@ -7,20 +7,6 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Shared
     /// Architectural Role: Represents business errors explicitly and type-safe.
     /// Implements Railway-Oriented Programming enabling structured failure handling.
     /// </summary>
-    public sealed class EmptyNameError : IError
-    {
-        private EmptyNameError() { }
-
-        public static readonly EmptyNameError Instance = new();
-    }
-
-    public sealed class EmptyEmailError : IError
-    {
-        private EmptyEmailError() { }
-
-        public static readonly EmptyEmailError Instance = new();
-    }
-
     public sealed class UserNotFoundError : IError
     {
         private UserNotFoundError() { }

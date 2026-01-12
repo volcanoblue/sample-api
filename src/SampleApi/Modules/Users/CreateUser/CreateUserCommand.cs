@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VolcanoBlue.Core.Command;
-using VolcanoBlue.SampleApi.Shared;
+using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
