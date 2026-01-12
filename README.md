@@ -6,12 +6,13 @@ This solution demonstrates a clean, maintainable ASP.NET Core 10.0 Web API imple
 
 The project showcases modern .NET development practices including:
 - Minimal APIs for lightweight HTTP endpoints
+- Event Sourcing for audit trails and temporal queries
+- Tactical Domain-Driven Design for domain model consistency
+- CQRS for separating the domain objects from the view models
 - Railway-Oriented Programming for error handling
 - OpenTelemetry for observability (traces, metrics, logs)
 - RFC 7807 Problem Details for standardized error responses
 - Integration testing with WebApplicationFactory
-- Event Sourcing for audit trails and temporal queries
-- CQRS for separating the domain objects from the view models
 
 ### Installation
 
@@ -133,6 +134,34 @@ Event Sourcing is a pattern where state changes are stored as a sequence of even
   - Events capture business intent, not just final state
   - Rich domain events enable analytics
   - Event stream as source of truth
+
+---
+
+### Tactical Domain-Driven Design
+
+Applies tactical DDD building blocks (Aggregates, Entities, Value Objects, Domain Events, Repositories) to keep the domain model expressive and consistent while remaining decoupled from infrastructure.
+
+**Advantages:**
+
+✓ **Explicit Boundaries and Invariants**
+  - Aggregates enforce invariants at a single consistency boundary
+  - Value Objects capture ubiquitous language and prevent invalid state
+  - Domain events express business facts instead of CRUD changes
+
+✓ **Persistence Ignorance**
+  - Repositories abstract storage details from the domain model
+  - Domain types stay persistence-agnostic and test-friendly
+  - Easier to swap storage (SQL/NoSQL/Event Store) without domain churn
+
+✓ **Behavior-Centric Design**
+  - Methods reflect business operations rather than data access
+  - Models stay focused on behaviors and rules, not DTO shape
+  - Encourages rich domain language shared with stakeholders
+
+✓ **Better Composability with CQRS and Events**
+  - Domain events integrate cleanly with Event Sourcing and outboxes
+  - Aggregates map naturally to command handlers
+  - Read models stay decoupled from write-side rules
 
 ---
 
