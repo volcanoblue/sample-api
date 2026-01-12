@@ -22,7 +22,6 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                 ILogger<CreateUserCommand> logger) =>                         // Logger injected by DI
             {
                 var result = await handler.HandleAsync(command, ct);
-
                 if (result)
                     return Results.Created($"/users/{result.ResultValue.Id}", new { id = result.ResultValue.Id });
 

@@ -42,6 +42,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
             .WithName("ChangeEmail")                                         // Endpoint name for route linking
             .WithOpenApi()                                                   // Generate OpenAPI documentation
             .Produces<Unit>(StatusCodes.Status200OK)                         // Document 200 response
+            .Produces(StatusCodes.Status204NoContent)                        // Document 200 response               
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity);      // Document 422 response
 
             return app;
