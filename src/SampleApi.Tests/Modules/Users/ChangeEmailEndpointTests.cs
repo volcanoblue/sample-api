@@ -64,7 +64,7 @@ namespace VolcanoBlue.SampleApi.Tests.Modules.Users
         }
 
         [Fact]
-        public async Task Should_return_404_when_user_wasnt_found()
+        public async Task Should_return_404_when_user_was_not_found()
         {
             //Act
             var response = await fixture.Client.PostAsJsonAsync(Endpoints.ChangeEmail, new { id = Guid.Empty, newemail = "empty@mail.com" });
