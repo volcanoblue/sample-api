@@ -2,8 +2,8 @@
 using VolcanoBlue.Core.Command;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.Errors;
 using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 {
@@ -31,14 +31,14 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                     return Results.NoContent();
                 }
 
-                (int StatusCode, string Message) = emailChanged.ErrorValue switch
+                (int StatusCode, string Detail) = emailChanged.ErrorValue switch
                 {
                     UserNotFoundError => (StatusCodes.Status404NotFound, "User not found"),
                     InvalidEmailError => (StatusCodes.Status400BadRequest, "Email cannot be empty"),
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error")
                 };
 
-                return Results.Problem(ProblemDetailsMapper.FromError(Message, http, StatusCode));
+                return Results.Problem(ProblemDetailsMapper.Map(http, StatusCode, "Business Error", Detail));
             })
             .WithName("ChangeEmail")                                         // Endpoint name for route linking
             .WithOpenApi()                                                   // Generate OpenAPI documentation

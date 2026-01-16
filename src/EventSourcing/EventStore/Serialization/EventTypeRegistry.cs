@@ -13,7 +13,7 @@ namespace VolcanoBlue.EventSourcing.EventStore.Serialization
     /// </summary>
     public static class EventTypeRegistry
     {
-        private static readonly Dictionary<string, Type> _types = new();
+        private static readonly Dictionary<string, Type> _types = [];
         private static bool _isInitialized = false;
 
         public static void Initialize(params Assembly[] assemblies)

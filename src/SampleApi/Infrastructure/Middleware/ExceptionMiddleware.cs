@@ -1,4 +1,6 @@
-﻿using Mvc = Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
+using Mvc = Microsoft.AspNetCore.Mvc;
 
 namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
 {
@@ -7,7 +9,8 @@ namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
     /// Architectural Role: Ensures unexpected exceptions are converted to RFC 7807 Problem Details responses.
     /// Prevents sensitive information leakage and maintains consistency in error responses.
     /// </summary>
-    public sealed class ExceptionMiddleware(RequestDelegate next, IProblemDetailsService problemDetails)
+    public sealed class ExceptionMiddleware(RequestDelegate next, 
+                                            IProblemDetailsService problemDetailsService)
     {
         public async Task InvokeAsync(HttpContext context)
         {
@@ -15,37 +18,24 @@ namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
             {
                 await next(context);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                await WriteProblemDetails(context,
-                                          StatusCodes.Status500InternalServerError,
-                                          "Internal Server Error",
-                                          "An unexpected error occurred",
-                                          ex);
+                await WriteProblemDetailsAsync(context, exc);
             }
         }
 
-        private async Task WriteProblemDetails(HttpContext context, 
-                                               int status, 
-                                               string title, 
-                                               string detail, 
-                                               Exception? ex = null)
+        private async Task WriteProblemDetailsAsync(HttpContext context, Exception exc)
         {
-            context.Response.StatusCode = status;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
-            var problem = new Mvc.ProblemDetails
-            {
-                Status = status,
-                Title = title,
-                Detail = detail,
-                Instance = context.Request.Path
-            };
+            var problem = ProblemDetailsMapper.Map(context,
+                                                   context.Response.StatusCode,
+                                                   "Internal Server Error",
+                                                   "An unexpected error occurred");
 
-            if (ex is not null)
-                problem.Extensions["exception"] = ex.GetType().Name;
+            problem.Extensions["exception"] = exc.GetType().Name;
 
-            await problemDetails.WriteAsync(new ProblemDetailsContext { HttpContext = context, 
-                                                                        ProblemDetails = problem });
+            await problemDetailsService.WriteAsync(new ProblemDetailsContext { HttpContext = context, ProblemDetails = problem });
         }
     }
 }

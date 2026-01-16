@@ -1,7 +1,7 @@
 ﻿using VolcanoBlue.Core.Query;
 using VolcanoBlue.SampleApi.Infrastructure.Cache;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.Errors;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.GetUser
 {

@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.Errors;
 
 namespace VolcanoBlue.SampleApi.Tests.Modules.Users
 {

@@ -2,8 +2,8 @@
 using System.Collections.Immutable;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.EventSourcing.Abstractions;
+using VolcanoBlue.SampleApi.Modules.Users.Domain.Errors;
 using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.Domain
 {

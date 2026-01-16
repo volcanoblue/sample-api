@@ -1,6 +1,6 @@
 ﻿using VolcanoBlue.Core.Error;
 
-namespace VolcanoBlue.SampleApi.Modules.Users.Shared
+namespace VolcanoBlue.SampleApi.Modules.Users.Domain.Errors
 {
     /// <summary>
     /// [DOMAIN - ERROR TYPES] Domain-specific error types for users.

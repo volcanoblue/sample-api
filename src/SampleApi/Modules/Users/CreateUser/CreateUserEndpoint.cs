@@ -3,7 +3,6 @@ using VolcanoBlue.Core.Error;
 using VolcanoBlue.SampleApi.Infrastructure.ProblemDetails;
 using VolcanoBlue.SampleApi.Modules.Users.Domain;
 using VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects;
-using VolcanoBlue.SampleApi.Modules.Users.Shared;
 
 namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
 {
@@ -33,7 +32,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error occurred")
                 };
 
-                return Results.Problem(ProblemDetailsMapper.FromError(Message, context, StatusCode));
+                return Results.Problem(ProblemDetailsMapper.Map(context, StatusCode, "Business Error", Message));
                 
             })
             .WithName("CreateUser")                                          // Endpoint name for route linking
