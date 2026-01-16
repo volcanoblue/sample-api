@@ -23,8 +23,7 @@ namespace VolcanoBlue.EventSourcing.EventStore.Serialization
 
             var eventTypes = assemblies
                 .SelectMany(a => a.GetTypes())
-                .Where(t => typeof(IEvent).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .ToList();
+                .Where(t => typeof(IEvent).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
 
             foreach (var type in eventTypes)
             {

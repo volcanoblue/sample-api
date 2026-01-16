@@ -14,11 +14,10 @@ builder.Services.AddObservability();             // Telemetry (traces, metrics, 
 builder.Services.AddProblemDetailsWithTraceId(); // RFC 7807 Problem Details
 builder.Services.AddSwaggerGen();                // Swagger
 
+builder.Services.AddEventSourcing();             // Event Sourcing infrastructure
 builder.Services.AddApplication();               // Domain and use case registrations
 
 var app = builder.Build();
-
-EventTypeRegistry.Initialize(typeof(Program).Assembly); // Scan assemblies once at startup to find IEvent implementations
 
 if (app.Environment.IsDevelopment())
 {
