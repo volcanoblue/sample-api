@@ -32,7 +32,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error occurred")
                 };
 
-                return Results.Problem(ProblemDetailsMapper.Map(context, StatusCode, "Business Error", Message));
+                return Results.Problem(ProblemDetailsFactory.Create(context, StatusCode, "Business Error", Message));
                 
             })
             .WithName("CreateUser")                                          // Endpoint name for route linking

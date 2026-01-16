@@ -38,7 +38,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                     _ => (StatusCodes.Status422UnprocessableEntity, "Unknown error")
                 };
 
-                return Results.Problem(ProblemDetailsMapper.Map(http, StatusCode, "Business Error", Detail));
+                return Results.Problem(ProblemDetailsFactory.Create(http, StatusCode, "Business Error", Detail));
             })
             .WithName("ChangeEmail")                                         // Endpoint name for route linking
             .WithOpenApi()                                                   // Generate OpenAPI documentation

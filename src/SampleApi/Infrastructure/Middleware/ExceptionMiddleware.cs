@@ -28,10 +28,10 @@ namespace VolcanoBlue.SampleApi.Infrastructure.Middleware
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
-            var problem = ProblemDetailsMapper.Map(context,
-                                                   context.Response.StatusCode,
-                                                   "Internal Server Error",
-                                                   "An unexpected error occurred");
+            var problem = ProblemDetails.ProblemDetailsFactory.Create(context,
+                                                               context.Response.StatusCode,
+                                                               "Internal Server Error",
+                                                               "An unexpected error occurred");
 
             problem.Extensions["exception"] = exc.GetType().Name;
 

@@ -9,28 +9,22 @@ namespace VolcanoBlue.SampleApi.Infrastructure.ProblemDetails
     /// Ensures consistency in error communication to API clients.
     /// Performance: Uses ObjectPool to reduce allocations for frequently created ProblemDetails objects.
     /// </summary>
-    public static class ProblemDetailsMapper
+    public static class ProblemDetailsFactory
     {
         private static readonly ObjectPool<Mvc.ProblemDetails> _pool = ObjectPool.Create(new ProblemDetailsPooledObjectPolicy());
 
-        public static Mvc.ProblemDetails Map(HttpContext context,
-                                             int statusCode = StatusCodes.Status400BadRequest,
-                                             string title = "",
-                                             string detail = "")
+        public static Mvc.ProblemDetails Create(HttpContext context,
+                                                int statusCode = StatusCodes.Status400BadRequest,
+                                                string title = "",
+                                                string detail = "")
         {
-            var problem = _pool.Get();
-
-            try 
+            var problem = new Mvc.ProblemDetails
             {
-                problem.Status = statusCode;
-                problem.Title = title;
-                problem.Detail = detail;
-                problem.Instance = context.Request.Path;
-            }
-            finally
-            {
-                _pool.Return(problem);
-            }
+                Status = statusCode,
+                Title = title,
+                Detail = detail,
+                Instance = context.Request.Path
+            };
 
             return problem;
         }
