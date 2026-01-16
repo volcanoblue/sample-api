@@ -19,12 +19,19 @@ namespace VolcanoBlue.SampleApi.Infrastructure.ProblemDetails
                                              string detail = "")
         {
             var problem = _pool.Get();
-            
-            problem.Status = statusCode;
-            problem.Title = title;
-            problem.Detail = detail;
-            problem.Instance = context.Request.Path;
-            
+
+            try 
+            {
+                problem.Status = statusCode;
+                problem.Title = title;
+                problem.Detail = detail;
+                problem.Instance = context.Request.Path;
+            }
+            finally
+            {
+                _pool.Return(problem);
+            }
+
             return problem;
         }
     }
