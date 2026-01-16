@@ -1,3 +1,4 @@
+using VolcanoBlue.EventSourcing.EventStore.Serialization;
 using VolcanoBlue.SampleApi.Infrastructure.DependencyInjection;
 using VolcanoBlue.SampleApi.Infrastructure.Middleware;
 using VolcanoBlue.SampleApi.Infrastructure.Observability;
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();                // Swagger
 builder.Services.AddApplication();               // Domain and use case registrations
 
 var app = builder.Build();
+
+EventTypeRegistry.Initialize(typeof(Program).Assembly); // Scan assemblies once at startup to find IEvent implementations
 
 if (app.Environment.IsDevelopment())
 {

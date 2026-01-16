@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.EventSourcing.Abstractions;
+using VolcanoBlue.EventSourcing.EventStore.Serialization;
 
 namespace VolcanoBlue.EventSourcing.EventStore
 {
@@ -34,7 +35,7 @@ namespace VolcanoBlue.EventSourcing.EventStore
 
                 if (stream is not null && stream.Length > 0)
                     return stream.OrderBy(e => e.Id)
-                                 .Select(EventSerializer.Desserialize)
+                                 .Select(EventSerializer.Deserialize)
                                  .ToImmutableArray();
 
                 return ImmutableArray<IEvent>.Empty;
@@ -46,7 +47,7 @@ namespace VolcanoBlue.EventSourcing.EventStore
         }
 
         public async Task<Result<ImmutableArray<IEvent>, IError>> ReadStreamFromEventIdAsync(string streamId, long eventId, 
-                                                                                          CancellationToken ct = default)
+                                                                                             CancellationToken ct = default)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace VolcanoBlue.EventSourcing.EventStore
 
                 if(stream is not null && stream.Length > 0)
                      return stream.OrderBy(e => e.Id)
-                                  .Select(EventSerializer.Desserialize)
+                                  .Select(EventSerializer.Deserialize)
                                   .ToImmutableArray();
 
                 return ImmutableArray<IEvent>.Empty;
@@ -71,6 +72,18 @@ namespace VolcanoBlue.EventSourcing.EventStore
         {
             var eventsToAppend = events.Select(e => EventSerializer.Serialize(streamId, e));
             await Events.AddRangeAsync(eventsToAppend, ct);
+        }
+
+        public async Task<Result<int, IError>> SaveStreamAsync(CancellationToken ct = default)
+        {
+            try
+            {
+                return await SaveChangesAsync(ct);
+            }
+            catch(Exception exc)
+            {
+                return await Task.FromResult(new ExceptionalError(exc));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

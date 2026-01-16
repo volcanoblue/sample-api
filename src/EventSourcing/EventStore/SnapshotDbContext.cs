@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VolcanoBlue.Core.Error;
 using VolcanoBlue.EventSourcing.Abstractions;
+using VolcanoBlue.EventSourcing.EventStore.Serialization;
 
 namespace VolcanoBlue.EventSourcing.EventStore
 {

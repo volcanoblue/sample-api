@@ -18,14 +18,20 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Infrastructure.Persistence
         public async Task<Result<User, IError>> GetByIdAsync(Guid id, CancellationToken ct)
         {
             var stream = await eventStore.ReadStreamAsync($"{streamPrefix}{id}", ct);
+            if(stream.IsError)
+                return Result<User, IError>.Error(stream.ErrorValue);
+
             return User.Restore(stream);
         }
 
         public async Task<Result<Unit, IError>> SaveAsync(User user, CancellationToken ct)
         {
             await eventStore.AppendToStreamAsync($"{streamPrefix}{user.Id}", user.UncommittedEvents, ct);
-            await eventStore.SaveChangesAsync(ct);
+            var streamSaved = await eventStore.SaveStreamAsync(ct);
+            if(!streamSaved)
+                return Result<Unit, IError>.Error(streamSaved.ErrorValue);
             
+            user.CommitEvents();
             return Unit.Value;
         }
     }

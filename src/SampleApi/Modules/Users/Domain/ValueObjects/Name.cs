@@ -8,14 +8,27 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects
     /// [DOMAIN - VALUE OBJECT] Represents a user's name with validation enforced through factory method.
     /// Architectural Role: Domain primitive that encapsulates name business rules, preventing null or empty names from existing in the domain model.
     /// </summary>
-    public sealed class Name(string value) : ValueObject<Name, string>(value)
+    public sealed class Name : ValueObject
     {
-        public static Result<Name, IError> Create(string value)
+        public string FullName { get; private set; }
+
+        private Name(string fullName) =>
+            FullName = fullName;  
+
+        public static Result<Name, IError> Create(string fullName)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(fullName))
                 return InvalidNameError.Instance;
 
-            return new Name(value);
+            return new Name(fullName);
+        }
+
+        public static implicit operator string(Name name) =>
+            name.FullName;
+
+        protected override IEnumerable<object?> EqualityProperties()
+        {
+            yield return FullName;
         }
     }
 

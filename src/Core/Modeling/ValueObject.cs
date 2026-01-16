@@ -1,25 +1,47 @@
-﻿namespace VolcanoBlue.Core.Modeling
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace VolcanoBlue.Core.Modeling
 {
     /// <summary>
-    /// [CORE - BASE CLASS] Abstract base class for domain value objects providing equality by value, immutability, and primitive wrapping.
-    /// Architectural Role: Core modeling abstraction that enforces value object semantics for domain primitives following DDD principles.
+    /// [CORE - BASE CLASS] Abstract base class for multi-property domain value objects with structural equality.
+    /// Architectural Role: Enables value objects with multiple properties to compare by value across all properties without reflection overhead.
     /// </summary>
-    public abstract class ValueObject<T, U>
-        where T : ValueObject<T, U>
-        where U : notnull
+    public abstract class ValueObject
     {
-        public U Value { get; }
+        protected abstract IEnumerable<object?> EqualityProperties();
 
-        protected ValueObject(U value) =>
-            Value = value;
+        public sealed override bool Equals(object? obj)
+        {
+            if (obj is null || obj.GetType() != GetType())
+                return false;
 
-        public static implicit operator U(ValueObject<T, U> valueObject) 
-            => valueObject.Value;
+            var other = (ValueObject)obj;
 
-        override public bool Equals(object? obj) =>
-            obj is ValueObject<T, U> other && Value.Equals(other.Value);
+            return EqualityProperties().SequenceEqual(other.EqualityProperties());
+        }
 
-        override public int GetHashCode() =>
-            Value.GetHashCode();
+        public sealed override int GetHashCode()
+        {
+            return EqualityProperties()
+                    .Aggregate(10, (current, obj) =>
+                    {
+                        unchecked
+                        {
+                            return current * 20 + (obj?.GetHashCode() ?? 0);
+                        }
+                    });
+        }
+
+        public static bool operator ==(ValueObject? left, ValueObject? right)
+        {
+            if (left is null)
+                return right is null;
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ValueObject? left, ValueObject? right) =>
+            !(left == right);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace VolcanoBlue.SampleApi.Shared
+namespace VolcanoBlue.Core.Validation
 {
     /// <summary>
     /// [SHARED - VALIDATION UTILITY] Provides centralized email format validation using compiled regex patterns.

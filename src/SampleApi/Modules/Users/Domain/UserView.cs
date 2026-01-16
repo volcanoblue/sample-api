@@ -8,6 +8,6 @@
     public sealed record UserView(Guid Id, string Name, string Email)
     {
         public static UserView From(User user) =>
-            new(user.Id, user.Name!, user.Email!);
+            new(user.Id, user.Name, user.Email);
     }
 }

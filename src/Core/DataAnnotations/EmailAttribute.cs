@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using VolcanoBlue.SampleApi.Shared;
+using VolcanoBlue.Core.Validation;
 
 namespace VolcanoBlue.Core.DataAnnotations
 {

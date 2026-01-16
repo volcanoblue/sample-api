@@ -12,12 +12,14 @@ namespace VolcanoBlue.EventSourcing.Abstractions
     public abstract class EventSourcedEntity
     {
         public long Version { get; protected set; } = 1;
-        public List<IEvent> UncommittedEvents { get; } = [];
+        private readonly List<IEvent> _uncommittedEvents = [];
         
+        public IReadOnlyCollection<IEvent> UncommittedEvents => _uncommittedEvents.AsReadOnly();
+
         protected void RaiseEvent<TEvent>(TEvent @event) where TEvent : IEvent
         {
             Version++;
-            UncommittedEvents.Add(@event);
+            _uncommittedEvents.Add(@event);
             ProcessEvent(@event);
         }
 
@@ -33,5 +35,8 @@ namespace VolcanoBlue.EventSourcing.Abstractions
         }
 
         protected abstract void ProcessEvent(IEvent @event);
+
+        public void CommitEvents() =>
+            _uncommittedEvents.Clear();
     }
 }

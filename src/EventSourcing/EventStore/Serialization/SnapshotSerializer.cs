@@ -2,7 +2,7 @@
 using System.Text.Json;
 using VolcanoBlue.EventSourcing.Abstractions;
 
-namespace VolcanoBlue.EventSourcing.EventStore
+namespace VolcanoBlue.EventSourcing.EventStore.Serialization
 {
     internal sealed class SnapshotSerializer
     {
