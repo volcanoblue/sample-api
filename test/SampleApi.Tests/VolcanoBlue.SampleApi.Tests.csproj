@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SampleApi\VolcanoBlue.SampleApi.csproj" />
+    <ProjectReference Include="..\..\src\SampleApi\VolcanoBlue.SampleApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
