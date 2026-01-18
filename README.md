@@ -1,5 +1,10 @@
 ﻿# VolcanoBlue Sample API - An Web API Template for ASP.NET
 
+---
+
+![Tests](https://img.shields.io/github/actions/workflow/status/volcanoblue/sample-api/dotnet.yml?logo=github&label=tests&color=029632) [![Buy me a coffee](https://img.shields.io/badge/-Buy%20me%20a%20coffee-B28F6B?logo=kofi&logoColor=FFFFFF&labelColor=413130&link=https%3A%2F%2Fko-fi.com%2Fmoonad_dotnet)](https://ko-fi.com/moonad_dotnet)
+
+
 ## Project Overview
 
 This solution demonstrates a clean, maintainable ASP.NET Core 10.0 Web API implementing Hexagonal Architecture (Ports & Adapters) with functional programming principles.
