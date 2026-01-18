@@ -1,9 +1,8 @@
 ﻿# VolcanoBlue Sample API - An Web API Template for ASP.NET
 
+![Last commit](https://img.shields.io/github/last-commit/volcanoblue/sample-api/main?&color=029632) ![Build](https://img.shields.io/github/actions/workflow/status/volcanoblue/sample-api/dotnet.yml?label=build&color=029632) ![Tests](https://img.shields.io/github/actions/workflow/status/volcanoblue/sample-api/dotnet.yml?logo=github&label=tests&color=029632)  [![Buy me a coffee](https://img.shields.io/badge/-Buy%20me%20a%20coffee-B28F6B?logo=kofi&logoColor=FFFFFF&labelColor=413130&link=https%3A%2F%2Fko-fi.com%2Fmoonad_dotnet)](https://ko-fi.com/moonad_dotnet)
+
 ---
-
-![Tests](https://img.shields.io/github/actions/workflow/status/volcanoblue/sample-api/dotnet.yml?logo=github&label=tests&color=029632) [![Buy me a coffee](https://img.shields.io/badge/-Buy%20me%20a%20coffee-B28F6B?logo=kofi&logoColor=FFFFFF&labelColor=413130&link=https%3A%2F%2Fko-fi.com%2Fmoonad_dotnet)](https://ko-fi.com/moonad_dotnet)
-
 
 ## Project Overview
 
