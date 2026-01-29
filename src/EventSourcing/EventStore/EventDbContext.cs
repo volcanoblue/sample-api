@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using VolcanoBlue.Core.Error;
@@ -29,15 +30,17 @@ namespace VolcanoBlue.EventSourcing.EventStore
         {
             try
             {
-                var stream = await Events.AsNoTracking()
-                                         .Where(e => e.StreamId == streamId)
-                                         .ToArrayAsync(ct);
+                var stream = Events.AsNoTracking()
+                                   .Where(e => e.StreamId == streamId)
+                                   .OrderBy(e => e.Id);
 
-                if (stream is not null && stream.Length > 0)
-                    return stream.OrderBy(e => e.Id)
-                                 .Select(EventSerializer.Deserialize)
-                                 .ToImmutableArray();
-
+                if (stream is not null)
+                {
+                    var builder = ImmutableArray.CreateBuilder<IEvent>(await stream.CountAsync(ct));
+                    builder.AddRange(stream.Select(EventSerializer.Deserialize));
+                    return builder.ToImmutable();
+                }
+                
                 return ImmutableArray<IEvent>.Empty;
             }
             catch(Exception exc)
