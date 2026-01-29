@@ -35,8 +35,5 @@ namespace VolcanoBlue.EventSourcing.Abstractions
         }
 
         protected abstract void ProcessEvent(IEvent @event);
-
-        public void CommitEvents() =>
-            _uncommittedEvents.Clear();
     }
 }
