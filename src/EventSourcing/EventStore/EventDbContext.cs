@@ -53,16 +53,17 @@ namespace VolcanoBlue.EventSourcing.EventStore
         {
             try
             {
-                var stream = await Events.AsNoTracking()
-                                         .Where(e => e.StreamId == streamId && e.Id > eventId)
-                                         .ToArrayAsync(ct);
+                var stream = Events.AsNoTracking()
+                                   .Where(e => e.StreamId == streamId && e.Id > eventId)
+                                   .OrderBy(e => e.Id);
 
-                if(stream is not null && stream.Length > 0)
-                     return stream.OrderBy(e => e.Id)
-                                  .Select(EventSerializer.Deserialize)
-                                  .ToImmutableArray();
+                var count = await stream.CountAsync(ct);
+                if(count == 0)
+                    return ImmutableArray<IEvent>.Empty;
 
-                return ImmutableArray<IEvent>.Empty;
+                var builder = ImmutableArray.CreateBuilder<IEvent>(count);
+                builder.AddRange(stream.Select(EventSerializer.Deserialize));
+                return builder.ToImmutable();
             }
             catch(Exception exc)
             {
