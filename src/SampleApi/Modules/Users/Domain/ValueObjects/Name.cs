@@ -10,6 +10,8 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects
     /// </summary>
     public sealed class Name : ValueObject
     {
+        public static Name Empty => new (string.Empty);
+
         public string FullName { get; private set; }
 
         private Name(string fullName) =>

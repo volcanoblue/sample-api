@@ -16,8 +16,8 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Domain
     public sealed partial class User : EventSourcedEntity
     {
         public Guid Id { get; private set; } = Guid.Empty;
-        public Name Name { get; private set; }
-        public Email Email { get; private set; }
+        public Name Name { get; private set; } = Name.Empty;
+        public Email Email { get; private set; } = Email.Empty;
 
         private User(Guid id, Name name, Email email) =>
             RaiseEvent(new UserCreated(Version, id, name, email));

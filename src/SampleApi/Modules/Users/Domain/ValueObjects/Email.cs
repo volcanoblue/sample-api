@@ -11,6 +11,8 @@ namespace VolcanoBlue.SampleApi.Modules.Users.Domain.ValueObjects
     /// </summary>
     public sealed class Email : ValueObject
     {
+        public static Email Empty => new(string.Empty);
+
         public string Address { get; private set; }
 
         private Email(string address) =>
