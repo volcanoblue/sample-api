@@ -27,7 +27,7 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
                 if (emailChanged)
                 {
                     metrics.EmailChanged.Add(1);
-                    
+
                     return Results.NoContent();
                 }
 
@@ -40,11 +40,10 @@ namespace VolcanoBlue.SampleApi.Modules.Users.ChangeEmail
 
                 return Results.Problem(ProblemDetailsFactory.Create(http, StatusCode, "Business Error", Detail));
             })
-            .WithName("ChangeEmail")                                         // Endpoint name for route linking
-            .WithOpenApi()                                                   // Generate OpenAPI documentation
-            .Produces<Unit>(StatusCodes.Status200OK)                         // Document 200 response
-            .Produces(StatusCodes.Status204NoContent)                        // Document 200 response               
-            .ProducesProblem(StatusCodes.Status422UnprocessableEntity);      // Document 422 response
+            .WithName("ChangeEmail")                                             // Endpoint name for route linking
+            .Produces<Unit>(StatusCodes.Status200OK)                             // Document 200 response
+            .Produces(StatusCodes.Status204NoContent)                            // Document 200 response               
+            .ProducesProblem(StatusCodes.Status422UnprocessableEntity);          // Document 422 response
 
             return app;
         }

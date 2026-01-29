@@ -35,11 +35,10 @@ namespace VolcanoBlue.SampleApi.Modules.Users.CreateUser
                 return Results.Problem(ProblemDetailsFactory.Create(context, StatusCode, "Business Error", Message));
                 
             })
-            .WithName("CreateUser")                                          // Endpoint name for route linking
-            .WithOpenApi()                                                   // Generate OpenAPI documentation
-            .Produces<object>(StatusCodes.Status201Created)                  // Document 201 response
-            .ProducesProblem(StatusCodes.Status400BadRequest)                // Document 400 response
-            .ProducesProblem(StatusCodes.Status422UnprocessableEntity);      // Document 422 response
+            .WithName("CreateUser")                                              // Endpoint name for route linking
+            .Produces<object>(StatusCodes.Status201Created)                      // Document 201 response
+            .ProducesProblem(StatusCodes.Status400BadRequest)                    // Document 400 response
+            .ProducesProblem(StatusCodes.Status422UnprocessableEntity);          // Document 422 response
 
             return app;
         }
